@@ -17,4 +17,5 @@ public interface PersonControllerApi {
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     Optional<List<PersonDto>> getAll();
+
 }

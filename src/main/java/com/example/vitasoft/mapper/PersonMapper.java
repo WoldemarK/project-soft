@@ -16,4 +16,5 @@ public interface PersonMapper {
     Person convertToPerson(PersonDto personDto);
 
     void updateFromDto(PersonDto personDto, @MappingTarget Person person);
+
 }

@@ -36,5 +36,4 @@ public class PersonService {
                         new AllException("Ошибка вызова, обратитесь к администратору")));
     }
 
-
 }
