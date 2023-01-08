@@ -2,10 +2,9 @@ package com.example.vitasoft.controller;
 
 import com.example.vitasoft.controller.api.PersonControllerApi;
 import com.example.vitasoft.dto.PersonDto;
-import com.example.vitasoft.model.Person;
 import com.example.vitasoft.service.PersonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,7 +16,12 @@ public class PersonController implements PersonControllerApi {
     private final PersonService personService;
     @Override
     public Optional<List<PersonDto>> getAll(){
-        return personService.findAll();
+        return ResponseEntity.ok(personService.findAll()).getBody();
+    }
+
+    @Override
+    public Optional<PersonDto> addOperator(Long id) {
+        return ResponseEntity.ok(personService.addOperator(id)).getBody();
     }
 
 
