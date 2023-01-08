@@ -4,12 +4,14 @@ import com.example.vitasoft.model.Request;
 import com.example.vitasoft.model.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 import java.util.Set;
 
 @Data
+@Builder
 @Schema(description = "Сущность проекта инициатора")
 public class PersonDto {
     @Schema(description = "Уникальный идентификатор заявки")
