@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestController implements RequestControllerApi {
     private final RequestService requestService;
 
-    @Override
-    public String message() {
-        return "null";
-    }
+
+
 }

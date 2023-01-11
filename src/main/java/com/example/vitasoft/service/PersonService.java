@@ -6,12 +6,15 @@ import com.example.vitasoft.mapper.PersonMapper;
 import com.example.vitasoft.model.Person;
 import com.example.vitasoft.model.Role;
 import com.example.vitasoft.repository.PersonRepository;
+import com.example.vitasoft.secyrity.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -21,9 +24,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PersonService {
+public class PersonService implements UserDetailsService {
     private final PersonRepository personRepository;
     private final PersonMapper mapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Person person = personRepository.findByEmail(username).orElseThrow(() ->
+                new UsernameNotFoundException("Пользователь не существует"));
+        return SecurityUser.fromUser(person);
+    }
 
     public Optional<List<PersonDto>> findAll() {
 
@@ -35,20 +45,19 @@ public class PersonService {
                 .orElseThrow(() -> new AllException(("Ошибка вызова, обратитесь к администратору"))));
     }
 
-    public Optional<PersonDto> addOperator(Long id) {
-
+    public PersonDto addOperator(Long id) {
         Optional<Person> person = personRepository.findById(id);
 
-        if (person.isEmpty()){
-            throw new AllException("Человека с " + id + " не найден");
+        if(person.isPresent()){
+
+            Set<Role> role = person.get().getRole();
+            role.add(Role.OPERATOR);
+            person.get().setRole(role);
+
+            mapper.convertToPersonDto(save);
+
         }
-        List<Role>roles =  person.get().getRoles();
-        roles.add(Role.OPERATOR);
-
-        person.get().setRoles(roles);
-        Person save = personRepository.save(person.get());
-
-        return Optional.ofNullable(mapper.convertToPersonDto(save));
+        return null;
     }
 
 }

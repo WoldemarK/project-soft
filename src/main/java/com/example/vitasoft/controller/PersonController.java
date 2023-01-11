@@ -20,8 +20,9 @@ public class PersonController implements PersonControllerApi {
     }
 
     @Override
-    public Optional<PersonDto> addOperator(Long id) {
-        return ResponseEntity.ok(personService.addOperator(id)).getBody();
+    public ResponseEntity<PersonDto> addOperator(Long id) {
+        PersonDto person = personService.addOperator(id);
+        return ResponseEntity.ok(person);
     }
 
 
