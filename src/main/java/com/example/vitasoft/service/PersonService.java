@@ -6,6 +6,7 @@ import com.example.vitasoft.mapper.PersonMapper;
 import com.example.vitasoft.model.Person;
 import com.example.vitasoft.model.Role;
 import com.example.vitasoft.repository.PersonRepository;
+
 import com.example.vitasoft.secyrity.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,9 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -36,7 +35,6 @@ public class PersonService implements UserDetailsService {
     }
 
     public Optional<List<PersonDto>> findAll() {
-
         List<Person> personList = personRepository.findAll();
 
         return Optional.ofNullable(Optional.of(personList.stream()
@@ -45,19 +43,16 @@ public class PersonService implements UserDetailsService {
                 .orElseThrow(() -> new AllException(("Ошибка вызова, обратитесь к администратору"))));
     }
 
-    public PersonDto addOperator(Long id) {
-        Optional<Person> person = personRepository.findById(id);
+    public PersonDto assignOperaRightsToPerson(Long id) {
+        Person person = personRepository.findById(id)
+                .orElseThrow(()->new AllException("Пользователь не найден"));
+        Set<Role> roles = new HashSet<>();
+        roles.add(person.getRole());
+        roles.add(Role.OPERATOR);
+//        person.setRole(roles);
+//        person = requestRepository.save(person);
 
-        if(person.isPresent()){
-
-            Set<Role> role = person.get().getRole();
-            role.add(Role.OPERATOR);
-            person.get().setRole(role);
-
-            mapper.convertToPersonDto(save);
-
-        }
-        return null;
+        return mapper.convertToPersonDto(person);
     }
 
 }

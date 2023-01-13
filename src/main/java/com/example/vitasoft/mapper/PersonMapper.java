@@ -5,10 +5,10 @@ import com.example.vitasoft.model.Person;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.Optional;
+
 @Mapper(componentModel = "spring")
 public interface PersonMapper {
-
-
     PersonDto convertToPersonDto(Person person);
     Person convertToPerson(PersonDto personDto);
 

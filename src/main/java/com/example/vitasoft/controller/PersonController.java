@@ -21,7 +21,7 @@ public class PersonController implements PersonControllerApi {
 
     @Override
     public ResponseEntity<PersonDto> addOperator(Long id) {
-        PersonDto person = personService.addOperator(id);
+        PersonDto person = personService.assignOperaRightsToPerson(id);
         return ResponseEntity.ok(person);
     }
 

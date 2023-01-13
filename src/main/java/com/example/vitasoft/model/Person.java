@@ -30,11 +30,10 @@ public class Person {
     private String email;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private Set<Role> role;
+    private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
-    private Collection<Request> requests;
-
-
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "status_role")
+    private StatusRole statusRole;
 
 }

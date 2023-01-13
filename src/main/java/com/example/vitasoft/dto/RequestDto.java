@@ -17,10 +17,8 @@ public class RequestDto {
     private String header;
     @Schema(description = "Описание проблемы")
     private String description;
-
     @Schema(description = "Статус заявки")
     private Status status;
-
     @Schema(description = "ID Person")
     private long personId;
     @Schema(description = "Дата  создания заявки")

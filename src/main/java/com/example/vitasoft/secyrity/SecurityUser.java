@@ -63,6 +63,7 @@ public class SecurityUser implements UserDetails {
                 person.getStatusRole().equals(StatusRole.ACTIVE),
                 person.getStatusRole().equals(StatusRole.ACTIVE),
                 person.getRole().getAuthorities()
+
         );
     }
 }

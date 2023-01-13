@@ -1,7 +1,6 @@
 package com.example.vitasoft.mapper;
 
 import com.example.vitasoft.dto.RequestDto;
-import com.example.vitasoft.dto.RequestDto;
 import com.example.vitasoft.model.Request;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
