@@ -1,6 +1,7 @@
 package com.example.vitasoft.model;
 
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -25,6 +26,4 @@ public enum Role {
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
     }
-
-
 }

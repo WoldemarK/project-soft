@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Log4j2
@@ -24,35 +26,17 @@ public class RequestService {
 
     private final RequestMapper requestMapper;
 
-    /**
-     * Пользователь может создавать заявки
-     *
-     * @param requestDto
-     * @return
-     */
     public RequestDto createRequest(RequestDto requestDto) {
         Request request = requestMapper.convertToRequest(requestDto);
         request = requestRepository.save(request);
         return requestMapper.convertToRequestDto(request);
     }
 
-    /**
-     * Просмотр всех заявок созданные Person
-     *
-     * @param id
-     * @return
-     */
     public List<RequestDto> viewingApplications(Long id) {
         List<RequestDto> list = requestRepository.findByPerson(personRepository.findById(id).get());
         return new ArrayList<>(list);
     }
 
-    /**
-     * редактировать созданные им заявки в статусе «черновик»
-     *
-     * @param requestDto
-     * @return
-     */
     public RequestDto update(RequestDto requestDto) {
         if (requestDto.getStatus() == Status.DRAFT) {
             Request request = requestMapper.convertToRequest(requestDto);
@@ -62,18 +46,33 @@ public class RequestService {
         return requestDto;
     }
 
-    /**
-     * Отправлять заявки на рассмотрение оператору.
-     * @return
-     */
-    public RequestDto submitForReviewRequest(Long id){
-      Request request = requestRepository.findById(id)
-              .orElseThrow(()-> new AllException("submitForReviewRequest"));
-        if (!(request ==null)){
+    public RequestDto submitForReviewRequest(Long id) {
+        Request request = requestRepository.findById(id)
+                .orElseThrow(() -> new AllException("submitForReviewRequest"));
+        if (!(request == null)) {
             request.setStatus(Status.SENT);
             request = requestRepository.save(request);
         }
         return requestMapper.convertToRequestDto(request);
     }
 
+    public RequestDto getAllRequestStatus() {
+        List<Request> request = requestRepository.findAllByStatus(Status.SENT);
+        return (RequestDto) (RequestDto) request
+                .stream()
+                .map(requestMapper::convertToRequestDto)
+                .collect(Collectors.toList());
+    }
+
+//    public RequestDto s(Long id, String status) {
+//
+//        Optional<Request> request = Optional.ofNullable(requestRepository.findById(id)
+//                .orElseThrow(() -> new AllException("В метеде " + id + ("Не найден"))));
+//
+//        if (request.isPresent() & (request.equals(Status.ACCEPTED) || request.equals(Status.REJECTED))) {
+//            request.get().setStatus(request);
+//            request = Optional.of(requestRepository.save(request.get()));
+//        }
+//        return requestMapper.convertToRequestDto(request);
+//    }
 }

@@ -35,6 +35,22 @@ public class RequestController implements RequestControllerApi {
     public ResponseEntity<RequestDto> submitForReviewRequest(Long id) {
         return ResponseEntity.ok(requestService.submitForReviewRequest(id));
     }
+//_____________________________________OPERATOR____________________
+//    @Override
+//    public ResponseEntity<RequestDto> getAllRequestStatus() {
+//        return ResponseEntity.ok(requestService.getAllRequestStatus());
+//
+//    }
+//
+//    @Override
+//    public ResponseEntity<RequestDto> acceptApplications() {
+//        return null;
+//    }
+//
+//    @Override
+//    public ResponseEntity<RequestDto> rejectApplications() {
+//        return null;
+//    }
 
 
 }

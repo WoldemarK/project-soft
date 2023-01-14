@@ -28,12 +28,13 @@ public class Person {
     private String password;
     @Column(name = "email")
     private String email;
-    @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "status_role")
-    private StatusRole statusRole;
+//    @Enumerated(value = EnumType.STRING)
+//    @Column(name = "status_role")
+//    private StatusRole statusRole;
 
 }

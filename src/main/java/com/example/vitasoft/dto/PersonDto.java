@@ -2,7 +2,6 @@ package com.example.vitasoft.dto;
 
 import com.example.vitasoft.model.Request;
 
-import com.example.vitasoft.model.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Builder;
@@ -19,8 +18,8 @@ public class PersonDto {
     private Long id;
     @Schema(description = "Имя инициатора заявки")
     private String name;
-    @Schema(description = "Роль на портале")
-    private Role roles;
+//    @Schema(description = "Роль на портале")
+//    private Role roles;
     @Schema(description = "Заявки от инициатора")
     private List<Request> requests;
 }
